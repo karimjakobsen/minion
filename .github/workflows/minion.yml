@@ -1,9 +1,11 @@
 name: Minion (email automation)
 
 on:
-  workflow_dispatch:        # allow manual runs from the Actions tab
+  workflow_dispatch:        # manual run from the Actions tab
+  push:
+    branches: [ main ]      # also run on pushes to main
   schedule:
-    - cron: "0 6 * * *"     # every day at 06:00 UTC (07:00 CET, 08:00 CEST approx.)
+    - cron: "0 6 * * *"     # daily 06:00 UTC
 
 jobs:
   run-minion:
@@ -29,5 +31,4 @@ jobs:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           RECIPIENT:  ${{ secrets.RECIPIENT }}
-        run: |
-          python minion.py
+        run: python minion.py
