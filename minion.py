@@ -4,6 +4,7 @@
 
 import os
 from dotenv import load_dotenv
+from orchestrator import build_digest
 
 # Load .env if present (safe to call even if the file doesn't exist)
 load_dotenv()
@@ -35,5 +36,10 @@ def send_email(subject, body):
         server.login(EMAIL_USER, EMAIL_PASS)  # use your 16-char Gmail app password
         server.send_message(msg)
 
+
+
 if __name__ == "__main__":
-    send_email("Test from Minion", "Your automation setup is working!")
+    body = build_digest()
+    send_email("Minion · Daily", body)
+    print("Minion: email sent.")
+

@@ -1,5 +1,7 @@
+python-dotenv
+PyYAML
 requests
 beautifulsoup4
-openai
-email-validator
-python-dotenv
+jinja2
+feedparser
+openai>=1.30.0

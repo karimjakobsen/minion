@@ -1,0 +1,19 @@
+defaults:
+  max_items_per_section: 8
+
+topics:
+  - heading: "Math practice (CS/AI core)"
+    agents:
+      - type: llm_math
+        count: 2
+
+  - heading: "Bible excerpt"
+    agents:
+      - type: llm_bible
+
+  - heading: "Horoscope (your chart)"
+    agents:
+      - type: llm_horoscope
+
+  # keep your other topics (groceries / UFC / optimistic news / science)
+  # either as `search` agents with strong queries, or replace later with LLM if you want summaries.

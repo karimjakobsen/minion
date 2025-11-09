@@ -1,15 +1,18 @@
-name: Minion (email automation)
+name: Minion (daily automation)
 
 on:
-  workflow_dispatch:        # manual run from the Actions tab
-  push:
-    branches: [ main ]      # also run on pushes to main
+  workflow_dispatch:          # Manual run
   schedule:
-    - cron: "0 6 * * *"     # daily 06:00 UTC
+    - cron: "0 6 * * *"       # Run every day at 06:00 UTC (07:00 CET)
 
 jobs:
   run-minion:
     runs-on: ubuntu-latest
+    env:
+      EMAIL_USER: ${{ secrets.EMAIL_USER }}
+      EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+      RECIPIENT:  ${{ secrets.RECIPIENT }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
     steps:
       - name: Check out repo
@@ -27,8 +30,15 @@ jobs:
           pip install python-dotenv
 
       - name: Run Minion
-        env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-          RECIPIENT:  ${{ secrets.RECIPIENT }}
         run: python minion.py
+
+      - name: Commit history if changed
+        if: always()
+        run: |
+          if [ -n "$(git status --porcelain data/history.json)" ]; then
+            git config user.name "minion-bot"
+            git config user.email "minion-bot@users.noreply.github.com"
+            git add data/history.json
+            git commit -m "update: Minion history [skip ci]" || true
+            git push
+          fi
