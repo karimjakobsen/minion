@@ -1,0 +1,6 @@
+requests
+beautifulsoup4
+openai
+smtplib
+email-validator
+python-dotenv
