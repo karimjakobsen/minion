@@ -1,0 +1,33 @@
+name: Minion (email automation)
+
+on:
+  workflow_dispatch:        # allow manual runs from the Actions tab
+  schedule:
+    - cron: "0 6 * * *"     # every day at 06:00 UTC (07:00 CET, 08:00 CEST approx.)
+
+jobs:
+  run-minion:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install python-dotenv
+
+      - name: Run Minion
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          RECIPIENT:  ${{ secrets.RECIPIENT }}
+        run: |
+          python minion.py
