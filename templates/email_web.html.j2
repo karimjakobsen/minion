@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Minion · Daily Digest</title>
+<style>
+  :root {
+    --accent: #00f0ff; --bg: #0b0d10; --card: rgba(20,22,26,0.85);
+    --text: #e0e5eb; --muted: #7a8b9c;
+  }
+  @media (prefers-color-scheme: light) {
+    :root { --accent:#0099ff; --bg:#f7f8fa; --card:rgba(255,255,255,0.9);
+            --text:#202327; --muted:#666; }
+  }
+  @keyframes neonPulse { 0%,100%{text-shadow:0 0 4px var(--accent),0 0 8px var(--accent);}
+                         50%{text-shadow:0 0 14px var(--accent),0 0 20px var(--accent);} }
+  html, body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
+  .container { max-width: 720px; margin: 40px auto; padding: 0 20px; animation: fade .8s ease forwards; opacity:0; }
+  @keyframes fade { from{opacity:0; transform: translateY(10px);} to{opacity:1; transform:none;} }
+  .header { text-align:center; font-size:28px; color:var(--accent); margin: 10px 0 24px; animation: neonPulse 3.5s ease-in-out infinite; }
+  .viewnote { text-align:center; color: var(--muted); margin-bottom: 10px; }
+  .section { background: var(--card); border:1px solid rgba(255,255,255,.06); border-left:4px solid var(--accent);
+             border-radius:16px; padding:22px 24px; margin:16px 0; box-shadow:0 0 30px rgba(0,255,255,.06); }
+  .heading { font-size:18px; color:var(--accent); margin-bottom:12px; }
+  ul { list-style:none; padding:0; margin:0; }
+  li { margin: 12px 0; line-height: 1.6; }
+  .footer { text-align:center; color:var(--muted); font-size:13px; margin: 24px 0 40px; }
+  code.math { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--accent); }
+</style>
+
+<!-- MathJax for full TeX rendering in browser -->
+<script>
+  window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }, svg: { fontCache:'global' } };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+</head>
+<body>
+  <div class="container">
+    <div class="header">Minion · Daily Digest — {{ date }}</div>
+    <div class="viewnote">Rendered with MathJax — LaTeX is live here.</div>
+
+    {% for section in sections %}
+      <div class="section">
+        <div class="heading">{{ section.heading }}</div>
+        <ul>
+          {% for item in section["items"] %}
+            <li>{{ item.rendered | replace('\n','<br>') | safe }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+
+    <div class="footer">Generated automatically by Minion · <em>minimal cyber-spiritual intelligence</em></div>
+  </div>
+</body>
+</html>

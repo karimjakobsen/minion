@@ -1,5 +1,5 @@
 defaults:
-  max_items_per_section: 8
+  max_items_per_section: 6
 
 topics:
   - heading: "Math practice (CS/AI core)"
@@ -15,5 +15,31 @@ topics:
     agents:
       - type: llm_horoscope
 
-  # keep your other topics (groceries / UFC / optimistic news / science)
-  # either as `search` agents with strong queries, or replace later with LLM if you want summaries.
+  - heading: "Groceries on discount (Denmark)"
+    agents:
+      - type: llm_search
+        schema: grocery_prices
+        query: "current grocery discounts in Denmark (Netto, Rema1000, Lidl, Coop)"
+        purpose: "Return only items with verifiable store, exact price (DKK), observed_date=TODAY, and a working source URL."
+        items: ["æg", "hakket oksekød", "græsk yoghurt", "blåbær", "søde kartofler", "hytteost", "peanut butter"]
+
+  - heading: "MMA / UFC news"
+    agents:
+      - type: llm_search
+        schema: mma_news
+        query: "Next UFC event, fight card changes, odds, breaking MMA news"
+        purpose: "Provide event names, fight dates, confirmed changes, odds (if published), all dated TODAY or last 3 days with source URLs and one image (poster)."
+
+  - heading: "Science × Spirituality"
+    agents:
+      - type: llm_search
+        schema: science_spirit
+        query: "recent peer-reviewed or preprint work linking quantum/information and consciousness/spirituality"
+        purpose: "Cite titles, authors/institutions, dates, URLs (doi/arXiv/journal) and one relevant illustrative image if available."
+
+  - heading: "Optimistic world headlines"
+    agents:
+      - type: llm_search
+        schema: good_news
+        query: "positive world news, humanitarian breakthroughs, clean-energy milestones"
+        purpose: "Only TODAY or last 3 days items with names, dates, and source URLs; include an image_url if a relevant photo exists."

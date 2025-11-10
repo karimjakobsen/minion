@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minion · Daily Digest</title>
+<style>
+:root { --accent:#00f0ff; --bg:#0b0d10; --card:rgba(20,22,26,.85); --text:#e0e5eb; --muted:#7a8b9c; }
+@media (prefers-color-scheme: light) {
+  :root { --accent:#0099ff; --bg:#f7f8fa; --card:rgba(255,255,255,.9); --text:#202327; --muted:#666; }
+}
+@keyframes neonPulse { 0%,100%{text-shadow:0 0 4px var(--accent),0 0 8px var(--accent);} 50%{text-shadow:0 0 14px var(--accent),0 0 20px var(--accent);} }
+body { margin:0!important; padding:0!important; background:#0b0d10; color:var(--text);
+       font-family:"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+table.wrapper { width:100%; background:#0b0d10; border-collapse:collapse; }
+.container { max-width:740px; margin:60px auto; padding:0 20px; animation:fadeIn 1s ease forwards; opacity:0; }
+@keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
+.header { text-align:center; font-size:28px; color:var(--accent); letter-spacing:1px; margin-bottom:40px; animation:neonPulse 3.5s ease-in-out infinite; }
+.viewlink { text-align:center; margin:-24px 0 40px; } .viewlink a{ color:var(--accent); text-decoration:none; }
+.section { background:var(--card); border:1px solid rgba(255,255,255,.06); border-left:4px solid var(--accent);
+           border-radius:16px; padding:24px 28px; margin-bottom:32px; box-shadow:0 0 30px rgba(0,255,255,.05); }
+.section:hover { box-shadow:0 0 40px rgba(0,255,255,.15); }
+.heading { font-size:20px; color:var(--accent); margin-bottom:16px; }
+ul { list-style:none; padding:0; margin:0; } li { margin-bottom:14px; line-height:1.6; }
+img.inline { display:block; max-width:100%; border-radius:12px; margin:10px 0 16px; box-shadow:0 0 20px rgba(0,255,255,.05); }
+.footer { text-align:center; color:var(--muted); font-size:13px; margin-top:60px; }
+</style>
+
+<!-- MathJax only matters when opened in a browser (email clients ignore scripts) -->
+<script>
+window.MathJax = { tex:{ inlineMath:[['$','$'],['\\(','\\)']] }, svg:{ fontCache:'global' } };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body style="margin:0;padding:0;background:#0b0d10;">
+<table class="wrapper" role="presentation">
+<tr><td align="center">
+<div class="container">
+  <div class="header">Minion · Daily Digest — {{ date }}</div>
+  {% if view_url %}
+    <div class="viewlink">💡 <a href="{{ view_url }}">View full version in browser (MathJax)</a></div>
+  {% endif %}
+
+  {% for section in sections %}
+    <div class="section">
+      <div class="heading">{{ section.heading }}</div>
+      <ul>
+      {% for item in section["items"] %}
+        <li>
+          {% if item.image_url %}
+            <img src="{{ item.image_url }}" alt="" class="inline">
+          {% endif %}
+          {{ item.rendered | replace('\n','<br>') | safe }}
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+
+  <div class="footer">Generated automatically by Minion · <em>minimal cyber-spiritual intelligence</em></div>
+</div>
+</td></tr></table>
+</body>
+</html>

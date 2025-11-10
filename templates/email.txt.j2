@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minion · Daily Digest</title>
+  <style>
+    body {
+      font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f7f8fa;
+      color: #222;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #2f80ed, #56ccf2);
+      color: white;
+      padding: 30px 40px;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .content {
+      padding: 30px 40px;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      font-size: 20px;
+      border-left: 4px solid #2f80ed;
+      padding-left: 10px;
+      margin-top: 35px;
+      margin-bottom: 10px;
+      color: #2f80ed;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 18px;
+      line-height: 1.5;
+      background: #f4f7fb;
+      padding: 14px 18px;
+      border-radius: 12px;
+      transition: background 0.4s ease;
+    }
+
+    li:hover {
+      background: #eef3f9;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      padding: 20px 40px 40px;
+      border-top: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      Minion · Daily Digest — {{ date }}
+    </div>
+
+    <div class="content">
+      {% for section in sections %}
+        <h2>{{ section.heading }}</h2>
+        <ul>
+          {% for item in section["items"] %}
+            <li>{{ item.rendered | replace('\n', '<br>') | safe }}</li>
+          {% endfor %}
+        </ul>
+      {% endfor %}
+    </div>
+
+    <div class="footer">
+      - Your personal Minion.<br>
+      <em>Flow lightly. Focus deeply.</em>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,7 +1,6 @@
+openai
 python-dotenv
-PyYAML
-requests
-beautifulsoup4
 jinja2
-feedparser
-openai>=1.30.0
+PyYAML
+beautifulsoup4
+requests

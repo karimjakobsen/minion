@@ -6,19 +6,28 @@ from . import Item, Section
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                     "(KHTML, like Gecko) Chrome/123.0 Safari/537.36"}
 
+import json
+
 def _ddg(query: str, max_results: int = 5):
-    url = "https://duckduckgo.com/html/?" + urlencode({"q": query})
+    """Return a list of result URLs using DuckDuckGo's JSON API."""
+    url = "https://api.duckduckgo.com/?" + urlencode({
+        "q": query,
+        "format": "json",
+        "no_html": 1,
+        "skip_disambig": 1
+    })
     r = requests.get(url, headers=UA, timeout=15)
     r.raise_for_status()
-    soup = BeautifulSoup(r.text, "html.parser")
+    data = r.json()
     out = []
-    for a in soup.select("a.result__a, a.result__a.js-result-title-link"):
-        href = a.get("href")
-        if href and href.startswith("http"):
-            out.append(href)
+    for topic in data.get("RelatedTopics", []):
+        if isinstance(topic, dict) and "FirstURL" in topic:
+            out.append(topic["FirstURL"])
         if len(out) >= max_results:
             break
     return out
+
+
 
 def _title_summary(url: str):
     r = requests.get(url, headers=UA, timeout=15)
