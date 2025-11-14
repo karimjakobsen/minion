@@ -1,65 +1,76 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Minion · Daily Digest</title>
+
+<!-- Force dark scheme -->
+<meta name="color-scheme" content="dark only">
+<meta name="supported-color-schemes" content="dark">
+
 <style>
-:root { --accent:#00f0ff; --bg:#0b0d10; --card:rgba(20,22,26,.85); --text:#e0e5eb; --muted:#7a8b9c; }
-@media (prefers-color-scheme: light) {
-  :root { --accent:#0099ff; --bg:#f7f8fa; --card:rgba(255,255,255,.9); --text:#202327; --muted:#666; }
+:root{
+  --accent:#00f0ff;
+  --bg:#0b0d10;
+  --card:rgba(20,22,26,0.95);
+  --text:#e0e5eb;
+  --muted:#7a8b9c;
+  --glass: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
 }
-@keyframes neonPulse { 0%,100%{text-shadow:0 0 4px var(--accent),0 0 8px var(--accent);} 50%{text-shadow:0 0 14px var(--accent),0 0 20px var(--accent);} }
-body { margin:0!important; padding:0!important; background:#0b0d10; color:var(--text);
-       font-family:"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased; }
-table.wrapper { width:100%; background:#0b0d10; border-collapse:collapse; }
-.container { max-width:740px; margin:60px auto; padding:0 20px; animation:fadeIn 1s ease forwards; opacity:0; }
-@keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
-.header { text-align:center; font-size:28px; color:var(--accent); letter-spacing:1px; margin-bottom:40px; animation:neonPulse 3.5s ease-in-out infinite; }
-.viewlink { text-align:center; margin:-24px 0 40px; } .viewlink a{ color:var(--accent); text-decoration:none; }
-.section { background:var(--card); border:1px solid rgba(255,255,255,.06); border-left:4px solid var(--accent);
-           border-radius:16px; padding:24px 28px; margin-bottom:32px; box-shadow:0 0 30px rgba(0,255,255,.05); }
-.section:hover { box-shadow:0 0 40px rgba(0,255,255,.15); }
-.heading { font-size:20px; color:var(--accent); margin-bottom:16px; }
-ul { list-style:none; padding:0; margin:0; } li { margin-bottom:14px; line-height:1.6; }
-img.inline { display:block; max-width:100%; border-radius:12px; margin:10px 0 16px; box-shadow:0 0 20px rgba(0,255,255,.05); }
-.footer { text-align:center; color:var(--muted); font-size:13px; margin-top:60px; }
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,system-ui,Arial;}
+.container{max-width:760px;margin:36px auto;padding:20px;}
+.header{font-size:30px;text-align:center;color:var(--accent);letter-spacing:1px;margin-bottom:18px;text-shadow:0 0 10px rgba(0,240,255,0.12);}
+.viewlink{text-align:center;margin-bottom:10px;}
+.section{background:var(--card);border-left:4px solid var(--accent);border-radius:14px;padding:18px;margin-bottom:22px;box-shadow:0 6px 24px rgba(0,0,0,0.6);transition:transform .18s ease;}
+.section:hover{transform:translateY(-4px);}
+.heading{color:var(--accent);font-size:18px;margin-bottom:10px;text-align:center;}
+li{margin-bottom:12px;line-height:1.5;}
+img.inline{display:block;max-width:100%;border-radius:10px;margin:10px 0;}
+.footer{text-align:center;color:var(--muted);font-size:13px;margin-top:24px;}
+.math{font-family: "CMU Serif", "Times New Roman", serif;}
+.small-muted{color:var(--muted);font-size:12px;margin-top:6px;}
+/* fade-in for browser */
+@keyframes fadeIn {from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.container{animation:fadeIn .6s ease both}
 </style>
 
-<!-- MathJax only matters when opened in a browser (email clients ignore scripts) -->
+<!-- MathJax only used for browser-view; email clients ignore script -->
 <script>
-window.MathJax = { tex:{ inlineMath:[['$','$'],['\\(','\\)']] }, svg:{ fontCache:'global' } };
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']] },
+  svg: { fontCache: 'global' }
+};
 </script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
+<body>
+  <div class="container">
+    <div class="header">Minion · Daily Digest — {{ date }}</div>
 
-<body style="margin:0;padding:0;background:#0b0d10;">
-<table class="wrapper" role="presentation">
-<tr><td align="center">
-<div class="container">
-  <div class="header">Minion · Daily Digest — {{ date }}</div>
-  {% if view_url %}
-    <div class="viewlink">💡 <a href="{{ view_url }}">View full version in browser (MathJax)</a></div>
-  {% endif %}
-
-  {% for section in sections %}
-    <div class="section">
-      <div class="heading">{{ section.heading }}</div>
-      <ul>
-      {% for item in section["items"] %}
-        <li>
-          {% if item.image_url %}
-            <img src="{{ item.image_url }}" alt="" class="inline">
-          {% endif %}
-          {{ item.rendered | replace('\n','<br>') | safe }}
-        </li>
-      {% endfor %}
-      </ul>
+    <div class="viewlink">
+      <a href="file://{{ ('' ) }}" style="color:var(--accent);text-decoration:none;">View this digest in your browser (full render)</a>
+      <div class="small-muted">Tip: open the saved file <code>data/digest.html</code> if email client strips JS.</div>
     </div>
-  {% endfor %}
 
-  <div class="footer">Generated automatically by Minion · <em>minimal cyber-spiritual intelligence</em></div>
-</div>
-</td></tr></table>
+    {% for section in sections %}
+      <div class="section">
+        <div class="heading">{{ section.heading }}</div>
+        <ul>
+          {% for item in section["items"] %}
+
+            <li>
+              {% if item.image_url %}
+                <img src="{{ item.image_url }}" class="inline" alt="">
+              {% endif %}
+              <div class="math" style="white-space:pre-wrap;">{{ item.rendered | safe }}</div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+
+    <div class="footer">Generated by Minion · minimal cyber-spiritual intelligence</div>
+  </div>
 </body>
 </html>

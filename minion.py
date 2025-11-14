@@ -6,6 +6,8 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from jinja2 import Environment, FileSystemLoader
 from dotenv import load_dotenv
+from orchestrator import build_digest
+from config import EMAIL_USER, EMAIL_PASS, RECIPIENT
 
 load_dotenv()
 
@@ -53,35 +55,13 @@ def render_html(sections):
     return html
 
 # ---------- email with embedded images ----------
-def send_email(subject, html):
-    msg = MIMEMultipart("related")
+def send_email_html(subject: str, html_body: str):
+    msg = MIMEText(html_body, _subtype="html", _charset="utf-8")
     msg["Subject"] = Header(subject, "utf-8")
     msg["From"] = EMAIL_USER
     msg["To"] = RECIPIENT
 
-    alt = MIMEMultipart("alternative")
-    msg.attach(alt)
-    alt.attach(MIMEText("Open the HTML part to view the digest.", "plain", "utf-8"))
-
-    img_urls = re.findall(r'<img[^>]+src="(https?://[^"]+)"', html)
-    cid_map = {}
-    for i, url in enumerate(img_urls):
-        try:
-            r = requests.get(url, timeout=10)
-            r.raise_for_status()
-            img = MIMEImage(r.content)
-            cid = f"img{i}@minion"
-            img.add_header("Content-ID", f"<{cid}>")
-            msg.attach(img)
-            cid_map[url] = f"cid:{cid}"
-        except Exception:
-            continue
-
-    for url, cid in cid_map.items():
-        html = html.replace(f'src="{url}"', f'src="{cid}"')
-
-    alt.attach(MIMEText(html, "html", "utf-8"))
-
+    # Gmail SMTP example: adjust if you use another provider
     with smtplib.SMTP("smtp.gmail.com", 587, timeout=30) as server:
         server.ehlo(); server.starttls(); server.ehlo()
         server.login(EMAIL_USER, EMAIL_PASS)
@@ -89,7 +69,8 @@ def send_email(subject, html):
 
 # ---------- main ----------
 if __name__ == "__main__":
-    sections = build_sections()
-    html = render_html(sections)
-    send_email("Minion · Daily", html)
+    # build digest returns HTML string and writes data/digest.html
+    html = build_digest()
+    print("Saved browser version and preparing to send email.")
+    send_email_html("Minion · Daily Digest", html)
     print("Minion: email sent.")

@@ -4,10 +4,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def must_get(name: str) -> str:
-    v = os.getenv(name)
-    if not v:
+    val = os.getenv(name)
+    if not val:
         raise RuntimeError(f"Missing required environment variable: {name}")
-    return v
+    return val
 
 EMAIL_USER = must_get("EMAIL_USER")
 EMAIL_PASS = must_get("EMAIL_PASS")

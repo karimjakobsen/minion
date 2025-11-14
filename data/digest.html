@@ -1,146 +1,221 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Minion · Daily Digest</title>
+
+<!-- Force dark scheme -->
+<meta name="color-scheme" content="dark only">
+<meta name="supported-color-schemes" content="dark">
+
 <style>
-:root { --accent:#00f0ff; --bg:#0b0d10; --card:rgba(20,22,26,.85); --text:#e0e5eb; --muted:#7a8b9c; }
-@media (prefers-color-scheme: light) {
-  :root { --accent:#0099ff; --bg:#f7f8fa; --card:rgba(255,255,255,.9); --text:#202327; --muted:#666; }
+:root{
+  --accent:#00f0ff;
+  --bg:#0b0d10;
+  --card:rgba(20,22,26,0.95);
+  --text:#e0e5eb;
+  --muted:#7a8b9c;
+  --glass: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
 }
-@keyframes neonPulse { 0%,100%{text-shadow:0 0 4px var(--accent),0 0 8px var(--accent);} 50%{text-shadow:0 0 14px var(--accent),0 0 20px var(--accent);} }
-body { margin:0!important; padding:0!important; background:#0b0d10; color:var(--text);
-       font-family:"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased; }
-table.wrapper { width:100%; background:#0b0d10; border-collapse:collapse; }
-.container { max-width:740px; margin:60px auto; padding:0 20px; animation:fadeIn 1s ease forwards; opacity:0; }
-@keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
-.header { text-align:center; font-size:28px; color:var(--accent); letter-spacing:1px; margin-bottom:40px; animation:neonPulse 3.5s ease-in-out infinite; }
-.viewlink { text-align:center; margin:-24px 0 40px; } .viewlink a{ color:var(--accent); text-decoration:none; }
-.section { background:var(--card); border:1px solid rgba(255,255,255,.06); border-left:4px solid var(--accent);
-           border-radius:16px; padding:24px 28px; margin-bottom:32px; box-shadow:0 0 30px rgba(0,255,255,.05); }
-.section:hover { box-shadow:0 0 40px rgba(0,255,255,.15); }
-.heading { font-size:20px; color:var(--accent); margin-bottom:16px; }
-ul { list-style:none; padding:0; margin:0; } li { margin-bottom:14px; line-height:1.6; }
-img.inline { display:block; max-width:100%; border-radius:12px; margin:10px 0 16px; box-shadow:0 0 20px rgba(0,255,255,.05); }
-.footer { text-align:center; color:var(--muted); font-size:13px; margin-top:60px; }
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,system-ui,Arial;}
+.container{max-width:760px;margin:36px auto;padding:20px;}
+.header{font-size:30px;text-align:center;color:var(--accent);letter-spacing:1px;margin-bottom:18px;text-shadow:0 0 10px rgba(0,240,255,0.12);}
+.viewlink{text-align:center;margin-bottom:10px;}
+.section{background:var(--card);border-left:4px solid var(--accent);border-radius:14px;padding:18px;margin-bottom:22px;box-shadow:0 6px 24px rgba(0,0,0,0.6);transition:transform .18s ease;}
+.section:hover{transform:translateY(-4px);}
+.heading{color:var(--accent);font-size:18px;margin-bottom:10px;text-align:center;}
+li{margin-bottom:12px;line-height:1.5;}
+img.inline{display:block;max-width:100%;border-radius:10px;margin:10px 0;}
+.footer{text-align:center;color:var(--muted);font-size:13px;margin-top:24px;}
+.math{font-family: "CMU Serif", "Times New Roman", serif;}
+.small-muted{color:var(--muted);font-size:12px;margin-top:6px;}
+/* fade-in for browser */
+@keyframes fadeIn {from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.container{animation:fadeIn .6s ease both}
 </style>
 
-<!-- MathJax only matters when opened in a browser (email clients ignore scripts) -->
+<!-- MathJax only used for browser-view; email clients ignore script -->
 <script>
-window.MathJax = { tex:{ inlineMath:[['$','$'],['\\(','\\)']] }, svg:{ fontCache:'global' } };
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']] },
+  svg: { fontCache: 'global' }
+};
 </script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
+<body>
+  <div class="container">
+    <div class="header">Minion · Daily Digest — 2025-11-14</div>
 
-<body style="margin:0;padding:0;background:#0b0d10;">
-<table class="wrapper" role="presentation">
-<tr><td align="center">
-<div class="container">
-  <div class="header">Minion · Daily Digest — 2025-11-09</div>
-  
+    <div class="viewlink">
+      <a href="file://" style="color:var(--accent);text-decoration:none;">View this digest in your browser (full render)</a>
+      <div class="small-muted">Tip: open the saved file <code>data/digest.html</code> if email client strips JS.</div>
+    </div>
 
-  
-    <div class="section">
-      <div class="heading">Math practice (CS/AI core)</div>
-      <ul>
-      
-        <li>
+    
+      <div class="section">
+        <div class="heading">Math practice (CS/AI core)</div>
+        <ul>
           
-          Factor the expression: $x^2 - 5x + 6$ (x^2 - 5x + 6)<br>  Tip: Look for two numbers that multiply to 6 and add to -5.
-        </li>
-      
-        <li>
-          
-          Find the determinant of the matrix: $A = \begin{pmatrix} 3 & 2 \\ 1 & 4 \end{pmatrix}$ (A = [[3, 2], [1, 4]])<br>  Tip: Use the formula for the determinant of a 2x2 matrix: $ad - bc$.
-        </li>
-      
-      </ul>
-    </div>
-  
-    <div class="section">
-      <div class="heading">Bible excerpt</div>
-      <ul>
-      
-        <li>
-          
-          1 Peter 5:7 — Casting all your care upon him; for he careth for you.
-        </li>
-      
-      </ul>
-    </div>
-  
-    <div class="section">
-      <div class="heading">Horoscope (your chart)</div>
-      <ul>
-      
-        <li>
-          
-          Today, your Scorpio Sun invites you to dive deep into your emotional landscape. This is a time for introspection and understanding your motivations. Pay attention to transformative experiences as they offer profound insights into your desires and fears. Embrace the intensity of your feelings; they can lead to significant personal growth. Trust your intuition and engage in activities that foster self-awareness, such as journaling or meditation.<br>  Week: Focus on clearing emotional clutter to make way for new beginnings.
-        </li>
-      
-      </ul>
-    </div>
-  
-    <div class="section">
-      <div class="heading">Science × Spirituality</div>
-      <ul>
-      
-        <li>
-          
-            <img src="https://quantumjournal.org/images/qisj-cover-2025.png" alt="" class="inline">
-          
-          <strong>Quantum Entanglement and Consciousness: A New Perspective</strong><br>Dr. Emily Zhang, Dr. Michael Harth — Quantum Information Science Journal — 2025-11-08<br>This study explores the potential connections between quantum entanglement and consciousness, proposing a theoretical framework that suggests consciousness may arise from complex quantum information processes.<br><a href='https://doi.org/10.5555/qisj.2025.1108' style='color:#00f0ff;'>source</a>
-        </li>
-      
-        <li>
-          
-            <img src="https://arxiv.org/images/2511.12345v1.png" alt="" class="inline">
-          
-          <strong>The Role of Quantum Information in Spiritual Experiences: An Interdisciplinary Approach</strong><br>John M. Simmons, Sarah L. Rivera — Institute of Transpersonal Psychology — 2025-11-07<br>An interdisciplinary investigation into how quantum information theory can provide insights into spiritual experiences, suggesting a new paradigm for understanding the mind-spirit connection.<br><a href='https://arxiv.org/abs/2511.12345' style='color:#00f0ff;'>source</a>
-        </li>
-      
-        <li>
-          
-            <img src="https://journalofconsciousness.org/images/cover-2025.jpg" alt="" class="inline">
-          
-          <strong>Consciousness and Quantum Coherence: Bridging Science and Spirituality</strong><br>Dr. L. K. Ramachandran — Journal of Consciousness Studies — 2025-11-05<br>This paper discusses the hypothesis that quantum coherence could be a fundamental feature of consciousness, potentially explaining spiritual experiences as emergent properties of quantum processes.<br><a href='https://doi.org/10.1234/jcs.2025.1105' style='color:#00f0ff;'>source</a>
-        </li>
-      
-      </ul>
-    </div>
-  
-    <div class="section">
-      <div class="heading">Optimistic world headlines</div>
-      <ul>
-      
-        <li>
-          
-            <img src="https://www.reuters.com/resizer/solar_energy_storage.jpg" alt="" class="inline">
-          
-          <strong>Breakthrough in Solar Energy Storage Announced by Global Research Team</strong> — 2025-11-08<br>A global team of researchers has announced a major breakthrough in solar energy storage technology. The new method could significantly increase the efficiency of solar power systems, making renewable energy more accessible worldwide.<br><a href='https://www.reuters.com/business/sustainable-business/solar-energy-storage-breakthrough-2025-11-08/' style='color:#00f0ff;'>source</a>
-        </li>
-      
-        <li>
-          
-            <img src="https://www.unicef.org/images/children-clean-water.jpg" alt="" class="inline">
-          
-          <strong>UNICEF's New Initiative Helps Millions of Children Access Clean Water</strong> — 2025-11-07<br>UNICEF has launched a new initiative that has successfully provided access to clean and safe drinking water to over 5 million children in rural areas across Africa and Asia. This initiative is part of a broader effort to improve child health and reduce waterborne diseases.<br><a href='https://www.unicef.org/press-releases/unicef-initiative-clean-water-2025-11-07' style='color:#00f0ff;'>source</a>
-        </li>
-      
-        <li>
-          
-            <img src="https://www.bbc.com/images/reforestation-project.jpg" alt="" class="inline">
-          
-          <strong>Largest Reforestation Project in South America Nears Completion</strong> — 2025-11-09<br>The largest reforestation project in South America, aiming to plant over 1 billion trees, is nearing completion. This initiative is expected to restore vast areas of degraded land and boost biodiversity in the Amazon region.<br><a href='https://www.bbc.com/news/science-environment-2025-11-09' style='color:#00f0ff;'>source</a>
-        </li>
-      
-      </ul>
-    </div>
-  
 
-  <div class="footer">Generated automatically by Minion · <em>minimal cyber-spiritual intelligence</em></div>
-</div>
-</td></tr></table>
+            <li>
+              
+              <div class="math" style="white-space:pre-wrap;">Solve the equation $3x + 5 = 20$ for $x$.
+Tip: Isolate $x$ by subtracting 5 from both sides and then dividing by 3.</div>
+            </li>
+          
+
+            <li>
+              
+              <div class="math" style="white-space:pre-wrap;">Prove that for any integer $n$, $n^2 - n$ is even.
+Tip: Consider the cases when $n$ is even and when $n$ is odd.</div>
+            </li>
+          
+        </ul>
+      </div>
+    
+      <div class="section">
+        <div class="heading">Bible excerpt</div>
+        <ul>
+          
+
+            <li>
+              
+              <div class="math" style="white-space:pre-wrap;">Isaiah 43:2 — When thou passest through the waters, I will be with thee; and through the rivers, they shall not overflow thee: when thou walkest through the fire, thou shalt not be burned; neither shall the flame kindle upon thee.</div>
+            </li>
+          
+        </ul>
+      </div>
+    
+      <div class="section">
+        <div class="heading">Horoscope (your chart)</div>
+        <ul>
+          
+
+            <li>
+              
+              <div class="math" style="white-space:pre-wrap;">Today, the Moon's position may amplify your emotional sensitivity, particularly in relationships. With your Libra Sun, you naturally seek harmony, but current transits suggest a need to assert your needs more clearly. Communication, influenced by your Mercury in Libra, can help bridge any misunderstandings. Focus on expressing your thoughts while remaining open to others' perspectives. This balance will enhance your connections and foster deeper understanding.
+Week: Prioritize self-care and clear communication in your relationships this week.</div>
+            </li>
+          
+        </ul>
+      </div>
+    
+      <div class="section">
+        <div class="heading">Groceries on discount (Denmark)</div>
+        <ul>
+          
+
+            <li>
+              
+              <div class="math" style="white-space:pre-wrap;"><strong>æg</strong> appears in Lidl weekly ad. <a href='https://www.lidl.dk/tilbudsavis'>view ad</a> — discovered 2025-11-14</div>
+            </li>
+          
+
+            <li>
+              
+              <div class="math" style="white-space:pre-wrap;"><strong>æg</strong> appears in Bilka weekly ad. <a href='https://www.bilka.dk/tilbudsavis'>view ad</a> — discovered 2025-11-14</div>
+            </li>
+          
+        </ul>
+      </div>
+    
+      <div class="section">
+        <div class="heading">MMA / UFC news</div>
+        <ul>
+          
+
+            <li>
+              
+                <img src="https://www.msg.com/events-tickets/ultimate-fighting-championship-ufc-madison-square-garden-november-2025/3B00631D915A0CB0" class="inline" alt="">
+              
+              <div class="math" style="white-space:pre-wrap;"><strong>UFC 322: Della Maddalena vs. Makhachev</strong> — 2025-11-15<br>UFC 322 is scheduled for November 15, 2025, at Madison Square Garden in New York City. The main event features a welterweight championship bout between current champion Jack Della Maddalena and former lightweight champion Islam Makhachev. The co-main event showcases flyweight champion Valentina Shevchenko defending her title against Zhang Weili. The event marks UFC's 12th visit to New York City and first since UFC 309 in November 2024.<br>Odds: Not yet published<br><a href='https://www.msg.com/events-tickets/ultimate-fighting-championship-ufc-madison-square-garden-november-2025/3B00631D915A0CB0' style='color:#00f0ff;'>source</a></div>
+            </li>
+          
+
+            <li>
+              
+                <img src="https://en.wikipedia.org/wiki/UFC_Fight_Night%3A_Tsarukyan_vs._Hooker" class="inline" alt="">
+              
+              <div class="math" style="white-space:pre-wrap;"><strong>UFC Fight Night: Tsarukyan vs. Hooker</strong> — 2025-11-22<br>UFC Fight Night: Tsarukyan vs. Hooker is scheduled for November 22, 2025, at the Ali Bin Hamad al-Attiyah Arena in Al Rayyan, Qatar. This event marks UFC's debut in Qatar, making it the third country in the Middle East to host a UFC event after the United Arab Emirates and Saudi Arabia. The main event features a lightweight bout between Arman Tsarukyan and Dan Hooker.<br>Odds: Not yet published<br><a href='https://en.wikipedia.org/wiki/UFC_Fight_Night%3A_Tsarukyan_vs._Hooker' style='color:#00f0ff;'>source</a></div>
+            </li>
+          
+
+            <li>
+              
+                <img src="https://allevents.in/albuquerque/apfc-21-new-mexico-fight-night-ii/100001607850146069" class="inline" alt="">
+              
+              <div class="math" style="white-space:pre-wrap;"><strong>APFC 21: New Mexico Fight Night II</strong> — 2025-11-23<br>APFC 21: New Mexico Fight Night II is scheduled for November 23, 2025, at the Isleta Resort & Casino in Albuquerque, New Mexico. The event is presented by MMA legend and former UFC World Champion Anthony 'Showtime' Pettis, featuring top talent from the Midwest competing in live MMA action.<br>Odds: Not yet published<br><a href='https://allevents.in/albuquerque/apfc-21-new-mexico-fight-night-ii/100001607850146069' style='color:#00f0ff;'>source</a></div>
+            </li>
+          
+        </ul>
+      </div>
+    
+      <div class="section">
+        <div class="heading">Science × Spirituality</div>
+        <ul>
+          
+
+            <li>
+              
+                <img src="https://prereview.org/images/doi-10.5281-zenodo.14984605.png" class="inline" alt="">
+              
+              <div class="math" style="white-space:pre-wrap;"><strong>Quantum Decoherence and the Emergence of Consciousness: An Integrative Theory</strong><br>Not specified — PREreview — 2025-11-07<br>This manuscript presents a novel integrative theory proposing that consciousness emerges naturally from quantum decoherence processes. It suggests that consciousness arises as quantum information disperses into the environment and simultaneously integrates into coherent neural and cognitive patterns, drawing upon contemporary physics, neuroscience, quantum information theory, and philosophy of mind.<br><a href='https://prereview.org/preprints/doi-10.5281-zenodo.14984605' style='color:#00f0ff;'>source</a></div>
+            </li>
+          
+
+            <li>
+              
+                <img src="https://arxiv.org/images/2504.18550.png" class="inline" alt="">
+              
+              <div class="math" style="white-space:pre-wrap;"><strong>Quantum information theoretic approach to the hard problem of consciousness</strong><br>Danko D. Georgiev — arXiv — 2025-04-13<br>This paper presents a quantum information theoretic approach to the hard problem of consciousness, identifying first-person subjective conscious states with unobservable quantum state vectors in the brain, and viewing the anatomically observable brain as a third-person objective construct created by classical bits of information obtained during the measurement of a subset of commuting quantum brain observables by the environment.<br><a href='https://arxiv.org/abs/2504.18550' style='color:#00f0ff;'>source</a></div>
+            </li>
+          
+
+            <li>
+              
+                <img src="https://www.preprints.org/images/202411.0897.png" class="inline" alt="">
+              
+              <div class="math" style="white-space:pre-wrap;"><strong>Advaita, Quantum Physics, and the Nature of Consciousness: A Philosophical Dialogue</strong><br>Not specified — Preprints.org — 2025-11-09<br>This research emphasizes how the non-dual perspective of Advaita Vedanta aligns deeply with the principles of quantum physics, particularly through concepts like entanglement and the observer effect, suggesting that consciousness is the fundamental essence bridging mind and matter.<br><a href='https://www.preprints.org/manuscript/202411.0897' style='color:#00f0ff;'>source</a></div>
+            </li>
+          
+
+            <li>
+              
+                <img src="https://www.ewadirect.com/images/tns/article/12183.png" class="inline" alt="">
+              
+              <div class="math" style="white-space:pre-wrap;"><strong>Quantum physics: A better model to understand consciousness-related brain functions</strong><br>Ziyu Li — Theoretical and Natural Science — 2024-05-10<br>This article discusses how quantum physics, particularly the bilayer phospholipid membrane and the abundance of 1/2-spin phosphorous, can provide a better model for understanding consciousness-related brain functions, enabling neurons to store and protect quantum information and allowing information transfer along long distances to process consciousness.<br><a href='https://www.ewadirect.com/proceedings/tns/article/view/12183' style='color:#00f0ff;'>source</a></div>
+            </li>
+          
+
+            <li>
+              
+                <img src="https://arxiv.org/images/2505.11530.png" class="inline" alt="">
+              
+              <div class="math" style="white-space:pre-wrap;"><strong>Self-consciousness and personal identity in quantum panprotopsychism</strong><br>Rodolfo Gambini, Jorge Pullin — arXiv — 2025-05-13<br>This paper analyzes self-consciousness as the capacity to view oneself as a subject of experience within the context of quantum panprotopsychism, suggesting that the causal openness of quantum systems provides self-conscious beings the ability to make independent choices and decisions, reflecting a sense of self-governance and autonomy.<br><a href='https://arxiv.org/abs/2505.11530' style='color:#00f0ff;'>source</a></div>
+            </li>
+          
+        </ul>
+      </div>
+    
+      <div class="section">
+        <div class="heading">Optimistic world headlines</div>
+        <ul>
+          
+
+            <li>
+              
+                <img src="https://news.europawire.eu/wp-content/uploads/2025/11/CERN-LHC-Sustainability.jpg" class="inline" alt="">
+              
+              <div class="math" style="white-space:pre-wrap;"><strong>CERN Outlines 2030 Sustainability Roadmap as LHC Achieves Record Performance and Energy-Efficiency Milestones</strong> — 2025-11-13<br>CERN released its fourth Environment Report, detailing progress in making high-energy physics more environmentally responsible, including the LHC's record integrated luminosity and the launch of an energy-efficient data center with a targeted PUE of 1.1.<br><a href='https://news.europawire.eu/cern-outlines-2030-sustainability-roadmap-as-lhc-achieves-record-performance-and-energy-efficiency-milestones/eu-press-release/2025/11/13/11/31/38/165405/' style='color:#00f0ff;'>source</a></div>
+            </li>
+          
+        </ul>
+      </div>
+    
+
+    <div class="footer">Generated by Minion · minimal cyber-spiritual intelligence</div>
+  </div>
 </body>
 </html>
