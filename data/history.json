@@ -25,6 +25,7 @@
     "d5d1080fec80dbef39a9ad413ab03c6799326208",
     "a88dec88aef18f41350da19eb1fd93c72e5d1e40",
     "ba00a54d109ddbc0d35f7e13d9a69a74b072a581",
+<<<<<<< HEAD
     "b56eed3d9ba95f1c61619463890d17e056b3e3ec",
     "e8c035326e55ba81ec31cc7345b61b2cd3f6e9e2",
     "43614ba15aa56a8db666afa512e5090da8400b85",
@@ -35,6 +36,14 @@
     "09ec86f8ca91d4ea9ccd45791ffb73f73cf0d9d4",
     "81ab56c7d70c86fad23a61d9f52c66485f1f98b5",
     "1244d692926b4c5dfdd88339a6dc4f063457490b"
+=======
+    "ee4eb3c531acba412ab82510e6b82ac875fad534",
+    "fa4b7e5961cca4858db59e1d772d0965bfa872b6",
+    "2729c61a085c5a468518c81af9453434d47bd92f",
+    "6bb96cfb90e4763a56b6ee77b968defda45dd71b",
+    "c6d30cf2270c110611ae7c90241ec4b5c20b0f16",
+    "5c059e8196a705103db18e884474e30e03e0d8dd"
+>>>>>>> cf5290d74c2b102b333ca7eb147bb754bcacc7cc
   ],
   "bible_refs": [
     "Philippians 4:6-7",
@@ -50,12 +59,20 @@
     "Psalm 34:4-6",
     "Isaiah 41:10-11",
     "1 Peter 5:7",
+<<<<<<< HEAD
     "Psalm 55:22",
     "Isaiah 41:13",
     "Psalm 37:5",
     "Isaiah 40:31",
     "Psalm 121:1-2",
     "Isaiah 43:2"
+=======
+    "Psalm 37:4-5",
+    "Isaiah 41:13-14",
+    "2 Corinthians 12:9-10",
+    "James 1:2-3",
+    "Psalm 94:18-19"
+>>>>>>> cf5290d74c2b102b333ca7eb147bb754bcacc7cc
   ],
   "last_horoscope_date": "2025-11-14"
 }
