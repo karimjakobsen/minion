@@ -1,5 +1,6 @@
 {
   "math_hashes": [
+<<<<<<< HEAD
     "ebb8e5a6f0251474a13bd9ea0e2ce65bea16c56a",
     "e5043eec1efe1f579de15faee83709692d705877",
     "e945000684459b3385cf13b5623c4e350910d4b4",
@@ -29,11 +30,28 @@
     "df2028d5ea982b20d9389bd9633c440e8875100d",
     "ed1a87a96bc90cb5cb58968ddee17c4e262d9276",
     "60b3efceef2651b354f173058e0a82ca8ef1382b"
+=======
+    "b63da9f19609595eabe637581e7b5ca1fe1d8b69",
+    "0868ac067ff171704e19a61d6dcf5f9c58761c30",
+    "81ab56c7d70c86fad23a61d9f52c66485f1f98b5",
+    "e9641da3ddd91be72ee95c950eccdf914ac53f44",
+    "afd4e222a812f2eeb8546ea3e2e2508ce24100ec",
+    "43614ba15aa56a8db666afa512e5090da8400b85",
+    "72ecb5a1907916f18d44765375ed8e4f5bdfd829",
+    "42653dc97690717a2eb430891927dc0af8256273",
+    "ec4c8fcaeb7dfeb1649121c38f0d097f2294580a",
+    "4fb3457eba573f0a96dc498057b7f0a3e1c373e9",
+    "0899082377870966241d93d8aa8218f980f18e62",
+    "a0291974f5f2318d2f10f8fb7f2df316f9663c63",
+    "f44de948232e59a91a2ad028adfc2b47ae13e559",
+    "6e73cec9624471f1c86fa4458aa022fc502ee2d6"
+>>>>>>> bd33a9a25897bb9de6fe8713befc668e0668d715
   ],
   "bible_refs": [
     "Philippians 4:13",
     "Psalm 23:1-2",
     "Proverbs 3:5-6",
+<<<<<<< HEAD
     "Isaiah 41:10",
     "Psalm 46:1",
     "Matthew 5:14",
@@ -55,6 +73,19 @@
     "Philippians 4:13",
     "Philippians 4:8",
     "Proverbs 3:5-6"
+=======
+    "Isaiah 40:31",
+    "Psalm 46:1",
+    "Psalm 119:105",
+    "Matthew 5:14",
+    "1 John 4:19",
+    "Isaiah 41:10",
+    "Romans 8:28",
+    "Psalm 27:1",
+    "Psalm 34:8",
+    "Isaiah 26:3",
+    "Psalm 119:11"
+>>>>>>> bd33a9a25897bb9de6fe8713befc668e0668d715
   ],
   "last_horoscope_date": "2025-11-27"
 }
