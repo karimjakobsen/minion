@@ -1,10 +1,13 @@
 {
   "math_hashes": [
     "f1817244151db2fff95324ff46a97f75cf9611e1",
-    "8c4634e0dc1ce485953ac6b4d9158ee9589ed0d3"
+    "8c4634e0dc1ce485953ac6b4d9158ee9589ed0d3",
+    "65261cacf73d142bea84192a8d41d527e04c66bd",
+    "23e1011907d8fb1f917df607c43c1fd257811fdb"
   ],
   "bible_refs": [
-    "Philippians 4:13"
+    "Philippians 4:13",
+    "Psalm 23:1-2"
   ],
   "last_horoscope_date": "2025-11-27"
 }
