@@ -15,10 +15,12 @@ topics:
   - heading: "Horoscope (your chart)"
     agents:
       - type: llm_horoscope
-
-  - heading: "Groceries on discount (Denmark)"
+  - heading: "🛒 Grocery Deals"
     agents:
-      - type: groceries
+      - type: llm_search
+        schema: grocery_prices
+        query: "tilbud æg hakket oksekød peanut butter kylling græsk yoghurt danske supermarkeder"
+        purpose: "Find cheapest current prices for specific grocery items"
 
   - heading: "MMA / UFC news"
     agents:

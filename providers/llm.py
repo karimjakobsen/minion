@@ -7,6 +7,7 @@ import datetime
 from typing import Any, Dict, List, Optional
 from openai import OpenAI
 
+
 HISTORY_PATH = os.path.join("data", "history.json")
 TODAY = datetime.date.today().isoformat()
 
@@ -133,36 +134,67 @@ def _call_web_search(system_prompt: str, user_prompt: str, model="gpt-4o-mini", 
 # ----------------- Agents -----------------
 
 def llm_math(cfg: dict, heading: str):
-    count = int(cfg.get("count", 2))
     hist = _load_hist()
     seen = set(hist.get("math_hashes", []))
 
     system = (
-        "You are a precise instructor. Produce concise daily problems for a 2nd-year CS/AI student. "
-        "Alternate topics across algebra, matrices, short proofs, probability, and discrete reasoning. "
-        "Return STRICT JSON: {\"math\":[{\"problem\":\"...\",\"tip\":\"...\",\"topic\":\"...\"}, ...]}."
+        "You are a precise instructor. Produce concise daily problems for a CS/AI student. "
+        "Wrap ALL mathematical expressions in $...$ for LaTeX rendering (e.g., $x^2 + y^2 = z^2$). "
+        "Use proper LaTeX syntax: exponents with ^{}, fractions with \\frac{}{}, etc. "
+        "Return STRICT JSON: {\"math\":[{\"problem\":\"...\",\"tip\":\"...\"}, {\"problem\":\"...\",\"tip\":\"...\"}]}"
     )
-    user = f"Create {count} distinct non-duplicate problems (include inline TeX between $...$ and a human form). Avoid repeating any problem whose SHA1 is in {list(seen)[:50]}."
 
-    txt = _call_chat([{"role":"system","content":system},{"role":"user","content":user}], model="gpt-4o-mini", temp=0.35)
+    user = (
+        "Generate 2-3 problems with mathematical expressions properly wrapped in $...$. "
+        "Avoid duplicates. Existing SHA1 hashes: "
+        + ", ".join(list(seen)[-20:])  # Only show last 20 to keep prompt manageable
+    )
+
+    txt = _call_chat(
+        [{"role":"system","content":system},
+         {"role":"user","content":user}],
+        model="gpt-4o-mini",
+        temp=0.35
+    )
+
     data = _extract_json(txt) or {}
+    problems = data.get("math") or []
+
     items = []
     new_hashes = []
-    for obj in (data.get("math") or [])[:count]:
+
+    # Ensure we get exactly 2 problems: one computational, one proof
+    if len(problems) >= 2:
+        problems = problems[:2]  # Take only first 2
+    
+    problem_types = ["Computational Problem", "Proof Problem"]
+    
+    for idx, obj in enumerate(problems):
         prob = (obj.get("problem") or "").strip()
-        tip = (obj.get("tip") or "").strip()
+        tip  = (obj.get("tip") or "").strip()
         if not prob:
             continue
+
         h = _sha(prob.lower())
         if h in seen:
             continue
         new_hashes.append(h)
-        items.append({"title": obj.get("topic", "Math"), "rendered": f"{prob}\nTip: {tip}"})
+
+        # Label problems by type
+        title = problem_types[idx] if idx < len(problem_types) else "Math"
+        
+        # Keep LaTeX expressions with $...$ in the rendered HTML
+        items.append({
+            "title": title,
+            "rendered": f"{prob}<br><em>Tip:</em> {tip}"
+        })
+
     if not items:
-        items = [{"title":"math (fallback)", "rendered": txt or "No math available."}]
-    if new_hashes:
-        hist["math_hashes"] = (hist.get("math_hashes", []) + new_hashes)[-200:]
-        _save_hist(hist)
+        return {"heading": heading, "items":[{"title":"Math (fallback)", "rendered": txt}]}
+
+    hist["math_hashes"] = (hist.get("math_hashes", []) + new_hashes)[-200:]
+    _save_hist(hist)
+
     return {"heading": heading, "items": items}
 
 def llm_bible(cfg: dict, heading: str):
@@ -219,7 +251,7 @@ def llm_horoscope(cfg: dict, heading: str):
 
     hist["last_horoscope_date"] = today
     _save_hist(hist)
-    return {"heading": heading, "items": [{"title": "Today", "rendered": f"{daily}\nWeek: {week}"}]}
+    return {"heading": heading, "items": [{"title": "Today", "rendered": f"{daily}<br><br><strong>Week:</strong> {week}"}]}
 
 # ----------------- Search-driven agent -----------------
 
@@ -236,9 +268,18 @@ def llm_search(cfg: dict, heading: str):
     # Strict system prompts for each schema
     if schema == "grocery_prices":
         sys = (
-            "You are a live web researcher. Find Danish grocery offers VALID THIS WEEK. "
+            "You are a live web researcher for Danish grocery prices. "
+            "Search for CURRENT offers (valid this week) for these specific items:\n"
+            "- Æg (eggs)\n"
+            "- Hakket oksekød (ground beef)\n"
+            "- Peanut butter\n"
+            "- Kylling (chicken)\n"
+            "- Hakket kylling (ground chicken)\n"
+            "- Græsk yoghurt (Greek yogurt)\n\n"
+            "Find the CHEAPEST current prices across Danish supermarkets (Netto, Rema 1000, Føtex, Bilka, Lidl, Aldi, etc.).\n"
             "Return STRICT JSON: {\"grocery_prices\":[{\"item\":\"...\",\"store\":\"...\",\"price_dkk\":123.45,"
-            "\"observed_date\":\"YYYY-MM-DD\",\"source_url\":\"https://...\",\"image_url\":\"https://...\"}]}"
+            "\"observed_date\":\"YYYY-MM-DD\",\"source_url\":\"https://...\",\"image_url\":\"https://...\"}]}\n"
+            "Only include items that are currently on sale/discount this week."
         )
     elif schema == "mma_news":
         sys = (
